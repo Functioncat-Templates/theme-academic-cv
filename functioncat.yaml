@@ -1,0 +1,23 @@
+opensystem: v1.0.0
+info:
+  name: theme academic cv 
+envs:
+  prod:
+    branch: main
+routes:
+  main_env: prod
+  main_app: frontend
+apps:
+  frontend:
+    type: web_frontend
+    envs:
+      prod:
+        build:
+          root_path: ./
+          before_script: HUGO_VERSION="0.126.3"; HUGO_ENABLEGITINFO="true";  HUGO_ENV="production"
+          command: hugo --gc --minify -b $URL && npx pagefind --source 'public'
+        provision:
+          root_path: public
+          runtime:
+            type: nodejs18x
+     
